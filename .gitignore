@@ -47,3 +47,6 @@ databases/mysql/
 # Vim
 *.swp
 *.swo
+
+#pdf
+*.pdf
