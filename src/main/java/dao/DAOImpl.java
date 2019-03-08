@@ -25,13 +25,6 @@ public class DAOImpl<GuestDTO> implements DAO<GuestDTO> {
 		ObjectMapper mapper = new ObjectMapper();
 		Set<GuestDTO> myObjects = null;
 
-		//Please sleep to avoid server overload
-		try {
-			Thread.sleep(15000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		//appending firstName and lastName to our API end point to form a GET request
 		String spec = APILink + "FirstName=" + firstName + "&LastName=" + lastName;
 

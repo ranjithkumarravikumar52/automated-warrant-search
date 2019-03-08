@@ -23,6 +23,12 @@ public class ServiceImpl<GuestDTO> implements Service<GuestDTO> {
 	@Override
 	public Set<GuestDTO> getDataFromTheAPI(String firstName, String lastName) {
 		log.info("Inside the service impl method");
+		//Please sleep to avoid server overload
+		try {
+			Thread.sleep(15000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return dao.getDataFromTheAPI(firstName, lastName);
 	}
 
