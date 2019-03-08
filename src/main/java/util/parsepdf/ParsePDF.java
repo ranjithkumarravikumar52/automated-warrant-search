@@ -150,11 +150,16 @@ public class ParsePDF {
             }
 
         }
-        if(middleName != null && !middleName.isEmpty()){
-            return new Guest(firstName, lastName, middleName, roomNumber, dob);
-        }
-        return new Guest(firstName, lastName, roomNumber, dob);
 
+        // return new Guest(firstName, lastName, middleName, roomNumber, dob);
+        Guest guest = Guest.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .middleName(middleName)
+                .roomNumber(roomNumber)
+                .dob(dob)
+                .build();
+        return guest;
     }
 
 
