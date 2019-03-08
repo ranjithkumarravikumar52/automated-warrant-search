@@ -1,11 +1,10 @@
 package controller;
 
+import model.Guest;
 import model.GuestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.Service;
-
-import java.util.Set;
 
 public class Controller {
 	private Service<GuestDTO> service;
@@ -16,7 +15,7 @@ public class Controller {
 		this.service = service;
 	}
 
-	public Set<GuestDTO> getDataFromAPI(String firstName, String lastName){
-		return service.getDataFromTheAPI(firstName, lastName);
+	public boolean checkWarrant(Guest guest){
+		return service.matchFound(guest);
 	}
 }
