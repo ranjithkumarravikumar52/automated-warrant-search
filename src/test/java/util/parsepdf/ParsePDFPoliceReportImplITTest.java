@@ -11,7 +11,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 //TODO incorrect last name format. will be resolved when the pdf file is corrected in the actual software
-public class ParsePDFPoliceReportImpl_ITTest {
+public class ParsePDFPoliceReportImplITTest {
 	private ParsePDFPoliceReportImpl guestParsePDF;
 
 	@Before
