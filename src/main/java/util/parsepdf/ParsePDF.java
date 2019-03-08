@@ -2,7 +2,7 @@ package util.parsepdf;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * OCP: If we need to add some additional logic where the parsing rules have changed for the pdf file
@@ -12,7 +12,7 @@ import java.util.List;
 public interface ParsePDF<T> {
 	String[] stripPDFFile(PDDocument document);
 
-	List<T> readPDFFile();
+	Set<T> readPDFFile();
 
 	T parseEachLine(String line);
 

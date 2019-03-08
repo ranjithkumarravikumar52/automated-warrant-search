@@ -11,8 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class performs the following operations
@@ -78,8 +78,8 @@ public class ParsePDFPoliceReportImpl implements LineValidity, ParsePDF<Guest> {
 	 * This method parses the pdf file based on the delimiters given in the stripPDFFile method <br>
 	 */
 	@Override
-	public List<Guest> readPDFFile() {
-		List<Guest> guestList = new ArrayList<>();
+	public Set<Guest> readPDFFile() {
+		Set<Guest> guestList = new HashSet<>();
 		try (PDDocument document = PDDocument.load(new File(nameOfTheFile))) {
 			if (!document.isEncrypted()) {
 				String[] lines = stripPDFFile(document);
@@ -108,6 +108,7 @@ public class ParsePDFPoliceReportImpl implements LineValidity, ParsePDF<Guest> {
 	 * <ol>DOB</ol>
 	 * </ul>
 	 *
+	 * This method is a combination of isLineValid followed by cleanTheLine
 	 * @param line each line in the pdf file
 	 */
 	@Override
@@ -179,8 +180,7 @@ public class ParsePDFPoliceReportImpl implements LineValidity, ParsePDF<Guest> {
 				continue;
 			}
 
-			//5. print information containing only DOB
-			//report contains check in and check out date which we dont need, hence we are skipping the first 2 dates
+			//5. print information containing only DOB report contains check in and check out date which we dont need, hence we are skipping the first 2 dates
 			if (isValidDate(s) && !isDOBFound) {
 				if (dobCount == 2) {
 					dob = s;
