@@ -5,12 +5,9 @@ import model.Guest;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -20,10 +17,7 @@ import static org.junit.Assert.*;
  * isLineValid = isValidRoomNumber && isValidPersonName
  */
 public class ParsePDFPoliceReportImplTest {
-	/**
-	 * application logger
-	 **/
-	private static final Logger LOG = LoggerFactory.getLogger(ParsePDFPoliceReportImplTest.class);
+	//TODO spring Dependency Injection
 	private ParsePDFPoliceReportImpl guestParsePDF;
 
 	@Before
@@ -50,7 +44,6 @@ public class ParsePDFPoliceReportImplTest {
 	public void stripPDFFile_checkIfAFileCanBeLoaded_NegativeCase() throws IOException {
 		PDDocument document = PDDocument.load(new File(""));
 	}
-
 
 	@Test
 	public void parseEachLine_PositiveTestCase() {
@@ -86,15 +79,4 @@ public class ParsePDFPoliceReportImplTest {
 		assertFalse(guestParsePDF.isLineValid("Current Guest list as of: 9/26/18    6:57PM"));
 	}
 
-	/**
-	 * Read is a high level operation which returns a List of Guest
-	 */
-	//TODO incorrect last name format. will be resolved when the pdf file is corrected in the actual software
-	@Test
-	public void readPDFFile_CheckIfListContainsGuest() {
-		Set<Guest> guestList = guestParsePDF.readPDFFile();
-		assertNotNull(guestList);
-		assertTrue(guestList.size() > 0);
-		assertTrue(guestList.size() <= 120);
-	}
 }

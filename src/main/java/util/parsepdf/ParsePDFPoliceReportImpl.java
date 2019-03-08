@@ -32,7 +32,6 @@ public class ParsePDFPoliceReportImpl implements LineValidity, ParsePDF<Guest> {
 	private String nameOfTheFile;
 
 	public ParsePDFPoliceReportImpl(String nameOfTheFile) {
-		LOG.info("Scanning from pdf file: " + nameOfTheFile);
 		this.nameOfTheFile = nameOfTheFile;
 	}
 
@@ -80,6 +79,7 @@ public class ParsePDFPoliceReportImpl implements LineValidity, ParsePDF<Guest> {
 	@Override
 	public Set<Guest> readPDFFile() {
 		Set<Guest> guestList = new HashSet<>();
+		LOG.info("Scanning from pdf file: " + nameOfTheFile);
 		try (PDDocument document = PDDocument.load(new File(nameOfTheFile))) {
 			if (!document.isEncrypted()) {
 				String[] lines = stripPDFFile(document);
