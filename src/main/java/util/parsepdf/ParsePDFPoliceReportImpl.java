@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -30,6 +31,14 @@ public class ParsePDFPoliceReportImpl implements LineValidity, ParsePDF<Guest> {
 	 **/
 	private static final Logger LOG = LoggerFactory.getLogger(ParsePDFPoliceReportImpl.class);
 	private String nameOfTheFile;
+	private static Set<Integer> excludeRoomNumberSet = new HashSet<>();
+
+	static {
+		excludeRoomNumberSet.add(114);
+		excludeRoomNumberSet.add(115);
+		excludeRoomNumberSet.add(259);
+		excludeRoomNumberSet.add(260);
+	}
 
 	public ParsePDFPoliceReportImpl(String nameOfTheFile) {
 		this.nameOfTheFile = nameOfTheFile;
@@ -78,7 +87,7 @@ public class ParsePDFPoliceReportImpl implements LineValidity, ParsePDF<Guest> {
 	 */
 	@Override
 	public Set<Guest> readPDFFile() {
-		Set<Guest> guestList = new HashSet<>();
+		Set<Guest> guestList = new LinkedHashSet<>();
 		LOG.info("Scanning from pdf file: " + nameOfTheFile);
 		try (PDDocument document = PDDocument.load(new File(nameOfTheFile))) {
 			if (!document.isEncrypted()) {
@@ -86,7 +95,7 @@ public class ParsePDFPoliceReportImpl implements LineValidity, ParsePDF<Guest> {
 				for (String line : lines) {
 					if (line != null && !line.isEmpty()) {
 						Guest guest = parseEachLine(line);
-						if (guest != null) {
+						if (guest != null && !excludeRoomNumberSet.contains(guest.getRoomNumber())) {
 							guestList.add(guest);
 						}
 					}

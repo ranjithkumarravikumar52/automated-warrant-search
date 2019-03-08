@@ -62,8 +62,7 @@ public class ServiceImpl implements Service<GuestDTO> {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Set<GuestDTO> dataFromTheAPI = dao.getDataFromTheAPI(guest.getFirstName(), guest.getLastName());
-		return dataFromTheAPI;
+		return dao.getDataFromTheAPI(guest.getFirstName(), guest.getLastName());
 	}
 
 
