@@ -55,7 +55,15 @@ public class GuestDTO {
 	@JsonProperty
 	private String Street;
 	@JsonProperty
+	private String DateOfBirth;
+	@JsonProperty
+	private String DateCreated;
+	@JsonProperty
+	private String ViewExternally;
+	@JsonProperty
 	private int WarrantId;
+	@JsonProperty
+	private String WarrantDetailsUrl;
 
 	@Override
 	public boolean equals(Object o) {
