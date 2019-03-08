@@ -26,6 +26,12 @@ public class ServiceImpl implements Service<GuestDTO> {
 	public boolean matchFound(Guest guest) {
 		Set<GuestDTO> dataFromAPI = getDataFromAPI(guest);
 
+		//if list is empty
+		if(dataFromAPI == null || dataFromAPI.isEmpty()){
+			return false;
+		}
+
+
 		//we need a unique name from all the records
 		for (GuestDTO guestDTO : dataFromAPI) {
 			// Split first name and last name from the DTO object
@@ -46,9 +52,11 @@ public class ServiceImpl implements Service<GuestDTO> {
 			log.info("Are dobs equal? "+guest.getDob()+" vs "+dtoDateOfBirthFormatted);
 
 			if(isFirstNameEqual && isLastNameEqual && isDateOfBirthEqual){
+				log.warn("Match found");
 				return true;
 			}
 		}
+		log.warn("No match");
 		return false;
 	}
 
@@ -57,8 +65,8 @@ public class ServiceImpl implements Service<GuestDTO> {
 		log.info("Inside the service impl method to get data from API");
 		//Please sleep to avoid server overload
 		try {
-			log.info("Initiating sleep for 15 seconds. Please wait....");
-			Thread.sleep(15000);
+			log.info("Initiating sleep for 60 seconds. Please wait....");
+			Thread.sleep(60000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
