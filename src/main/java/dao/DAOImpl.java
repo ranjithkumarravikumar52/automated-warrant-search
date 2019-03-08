@@ -32,15 +32,16 @@ public class DAOImpl<GuestDTO> implements DAO<GuestDTO> {
 			e.printStackTrace();
 		}
 
+		//appending firstName and lastName to our API end point to form a GET request
 		String spec = APILink + "FirstName=" + firstName + "&LastName=" + lastName;
 
 		try {
-			log.info(spec+"....connecting");
+			log.info(spec+" connecting");
 			myObjects = mapper.readValue(new URL(spec),new TypeReference<Set<GuestDTO>>() {});
 			log.info(spec+"....connection successful");
 
 		} catch (IOException e) {
-			log.error(spec+"....connection failed");
+			log.error(spec+" connection failed");
 			e.printStackTrace();
 		}
 
