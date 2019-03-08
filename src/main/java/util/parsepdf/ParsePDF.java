@@ -4,6 +4,8 @@ import model.Guest;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,19 +18,23 @@ import java.util.List;
 public class ParsePDF {
 
     private String nameOfTheFile;
-    private List<Guest> guestList = new ArrayList<>();
+    private List<Guest> guestList;
+    /**application logger**/
+    private static final Logger LOG = LoggerFactory.getLogger(ParsePDF.class);
 
     public ParsePDF(String nameOfTheFile) {
+    	LOG.info("Scanning from pdf file: "+nameOfTheFile);
         this.nameOfTheFile = nameOfTheFile;
+        guestList = new ArrayList<>();
     }
 
     /**
      * Stripping the pdf document based on the delimiters like new line, white space etc. <br>
      * Change the delimiter in the string variable whiteSpaceRegExp in future if you have to deal with any other pdf files<br>
      *
-     * @param document - PDDocument object which has read a raw pdf file
+     * @param document - PDDocument object which has to read a raw pdf file
      * @return parsed text format of pdf file in the form of array of string
-     * @throws IOException
+     * @throws IOException when failed to read the PDF file
      */
     private String[] stripPDFFile(PDDocument document) throws IOException {
         PDFTextStripperByArea stripper = new PDFTextStripperByArea();
@@ -56,7 +62,7 @@ public class ParsePDF {
                 printGuestList(guestList);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+        	LOG.debug(e.getMessage());
         }
     }
 
@@ -141,6 +147,7 @@ public class ParsePDF {
             }
 
             //5. print information containing only DOB
+            //report contains check in and check out date which we dont need, hence we are skipping the first 2 dates
             if(isValidDate(s) && !isDOBFound ){
                 if(dobCount == 2){
                     dob = s;
@@ -152,14 +159,13 @@ public class ParsePDF {
         }
 
         // return new Guest(firstName, lastName, middleName, roomNumber, dob);
-        Guest guest = Guest.builder()
+        return Guest.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .middleName(middleName)
                 .roomNumber(roomNumber)
                 .dob(dob)
                 .build();
-        return guest;
     }
 
 
